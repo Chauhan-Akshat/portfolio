@@ -176,9 +176,10 @@
   .front-actions{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:center;}
   .btn-explore{
     display:inline-flex; align-items:center; gap:10px;
-    font-family:var(--disp); font-weight:700; font-size:14.5px;
+    font-family:var(--disp); font-weight:700; font-size:14px;
     background:linear-gradient(90deg, var(--cyan), var(--violet)); color:var(--bg);
-    padding:13px 22px; border-radius:8px; border:none;
+    padding:12px 22px; border-radius:8px; border:1.5px solid transparent;
+    text-decoration:none; line-height:1.2;
     box-shadow:0 8px 30px -8px rgba(110,231,245,0.4);
     transition:transform .18s ease, box-shadow .18s ease;
   }
@@ -332,11 +333,12 @@
   .x-row{background:var(--card-solid); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.13); border-radius:12px; padding:22px 24px; margin-bottom:14px;}
   .x-row:last-child{margin-bottom:0;}
   .x-role{font-family:var(--disp); font-weight:700; font-size:17px;}
-  .x-org{font-family:var(--mono); font-size:11.5px; color:var(--cyan); margin:4px 0 10px;}
+  .x-org-row{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:4px 0 10px; flex-wrap:wrap;}
+  .x-org{font-family:var(--mono); font-size:11.5px; color:var(--cyan);}
+  .x-date{font-family:var(--mono); font-size:11px; color:var(--muted); white-space:nowrap;}
   .x-row ul{list-style:none; display:flex; flex-direction:column; gap:7px;}
   .x-row li{font-size:13.5px; color:#B7BDCC; padding-left:16px; position:relative; line-height:1.55;}
   .x-row li::before{content:"—"; position:absolute; left:0; color:var(--violet);}
-  .x-date{font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:10px;}
 
   .inv-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px; text-align:left;}
   .inv-card{background:var(--card-solid); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.13); border-radius:12px; padding:18px 20px;}
@@ -364,7 +366,7 @@
   .c-link .cl-arrow{color:var(--cyan); flex-shrink:0; margin-left:12px;}
 
   @media (max-width:640px){
-    .segment-page{padding:90px 6vw 60px;}
+    .segment-page{padding:132px 6vw 60px;}
     .seg-grid, .inv-grid{grid-template-columns:1fr;}
     .x-row{padding:18px 0;}
   }
@@ -378,6 +380,21 @@
     .mobile-view{display:none;}
     .desktop-view{display:block; position:relative; z-index:2;}
     #hero-photo{display:none;}
+  }
+
+  .d-bg-photo{
+    position:fixed; top:0; right:0; height:100vh; width:46vw; z-index:0;
+    overflow:hidden; pointer-events:none; opacity:0.22;
+  }
+  .d-bg-photo img{
+    height:100%; width:100%; object-fit:cover; object-position:top center;
+    filter:grayscale(0.25) contrast(1.05) brightness(0.95);
+  }
+  .d-bg-photo::after{
+    content:""; position:absolute; inset:0;
+    background:
+      linear-gradient(90deg, var(--bg) 0%, rgba(5,7,12,0.4) 30%, transparent 60%),
+      linear-gradient(180deg, var(--bg) 0%, transparent 16%, transparent 78%, var(--bg) 100%);
   }
 
   /* ================= MOBILE SCROLL PERFORMANCE =================
@@ -443,9 +460,9 @@
   .d-hero-sub{font-size:14.5px; color:var(--muted); line-height:1.7; max-width:52ch; margin-bottom:28px;}
   .btn-ghost-cta{
     display:inline-flex; align-items:center; gap:8px;
-    font-family:var(--disp); font-weight:600; font-size:14px;
+    font-family:var(--disp); font-weight:700; font-size:14px; line-height:1.2;
     color:var(--ink); border:1.5px solid var(--border); border-radius:8px;
-    padding:12px 20px; text-decoration:none; transition:border-color .15s ease, color .15s ease;
+    padding:12px 22px; text-decoration:none; transition:border-color .15s ease, color .15s ease;
   }
   .btn-ghost-cta:hover{border-color:var(--cyan); color:var(--cyan);}
 
@@ -616,22 +633,20 @@
     <div class="seg-list">
       <div class="x-row">
         <div class="x-role">Agentic AI Intern</div>
-        <div class="x-org">Innomatics Research Labs</div>
+        <div class="x-org-row"><span class="x-org">Innomatics Research Labs</span><span class="x-date">Feb – May 2026</span></div>
         <ul>
           <li>Built a custom regex-based text preprocessing pipeline; trained and compared Logistic Regression, Decision Tree, and Naive Bayes classifiers on TF-IDF features</li>
           <li>Fine-tuned a DistilBERT model on the IMDB dataset using PyTorch and Hugging Face's Transformers/Trainer API</li>
           <li>Built and tested 5 FastAPI services as part of backend-focused coursework</li>
         </ul>
-        <div class="x-date">Feb – May 2026</div>
       </div>
       <div class="x-row">
         <div class="x-role">Technical Content Writer</div>
-        <div class="x-org">Pragadas Technologies</div>
+        <div class="x-org-row"><span class="x-org">Pragadas Technologies</span><span class="x-date">Jun – Aug 2024</span></div>
         <ul>
           <li>Researched emerging technologies and produced structured technical documentation for engineering audiences</li>
           <li>Collaborated cross-functionally to review and refine content for accuracy and clarity</li>
         </ul>
-        <div class="x-date">Jun – Aug 2024</div>
       </div>
     </div>
   </div>
@@ -708,6 +723,8 @@
 
 <!-- ================= DESKTOP VIEW ================= -->
 <div class="desktop-view" id="desktopView">
+
+  <div class="d-bg-photo"><img id="dBgPhotoImg" src="" alt=""></div>
 
   <header class="d-nav">
     <div class="d-nav-inner">
@@ -858,22 +875,20 @@
       <div class="seg-list" style="max-width:100%;">
         <div class="x-row">
           <div class="x-role">Agentic AI Intern</div>
-          <div class="x-org">Innomatics Research Labs</div>
+          <div class="x-org-row"><span class="x-org">Innomatics Research Labs</span><span class="x-date">Feb – May 2026</span></div>
           <ul>
             <li>Built a custom regex-based text preprocessing pipeline; trained and compared Logistic Regression, Decision Tree, and Naive Bayes classifiers on TF-IDF features</li>
             <li>Fine-tuned a DistilBERT model on the IMDB dataset using PyTorch and Hugging Face's Transformers/Trainer API</li>
             <li>Built and tested 5 FastAPI services as part of backend-focused coursework</li>
           </ul>
-          <div class="x-date">Feb – May 2026</div>
         </div>
         <div class="x-row">
           <div class="x-role">Technical Content Writer</div>
-          <div class="x-org">Pragadas Technologies</div>
+          <div class="x-org-row"><span class="x-org">Pragadas Technologies</span><span class="x-date">Jun – Aug 2024</span></div>
           <ul>
             <li>Researched emerging technologies and produced structured technical documentation for engineering audiences</li>
             <li>Collaborated cross-functionally to review and refine content for accuracy and clarity</li>
           </ul>
-          <div class="x-date">Jun – Aug 2024</div>
         </div>
       </div>
     </section>
@@ -939,6 +954,8 @@
 const heroImgSrc = document.getElementById('heroPhotoImg').src;
 const dBadgeImg = document.getElementById('dBadgeImg');
 if(dBadgeImg) dBadgeImg.src = heroImgSrc;
+const dBgPhotoImg = document.getElementById('dBgPhotoImg');
+if(dBgPhotoImg) dBgPhotoImg.src = heroImgSrc;
 
 /* ============ NAVIGATION: PANEL + FULL SEGMENT PAGES ============ */
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
